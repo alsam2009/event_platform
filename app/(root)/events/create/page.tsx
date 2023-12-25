@@ -1,10 +1,23 @@
-import EventForm from "@/components/shared/EventForm"
+import EventForm from "@/components/shared/EventForm";
 import { auth } from "@clerk/nextjs";
 
 const CreateEvent = () => {
+  // let userId;
+
   const { sessionClaims } = auth();
 
   const userId = sessionClaims?.userId as string;
+  // const { userId: userIdFromAuth } = auth();
+
+  // if (!userIdFromAuth) {
+  //   userId = '';
+  // } else {
+  //   userId = userIdFromAuth;
+
+
+
+
+  // console.log('userId: ', userId);
 
   return (
     <>
@@ -18,5 +31,7 @@ const CreateEvent = () => {
     </>
   )
 }
+
+
 
 export default CreateEvent

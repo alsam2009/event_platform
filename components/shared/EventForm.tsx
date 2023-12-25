@@ -1,26 +1,26 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { eventFormSchema } from "@/lib/validator"
-import * as z from 'zod'
-import { eventDefaultValues } from "@/constants"
-import Dropdown from "./Dropdown"
 import { Textarea } from "@/components/ui/textarea"
-import { FileUploader } from "./FileUploader"
-import { useState } from "react"
-import Image from "next/image"
-import DatePicker from "react-datepicker";
+import { eventDefaultValues } from "@/constants"
 import { useUploadThing } from '@/lib/uploadthing'
+import { eventFormSchema } from "@/lib/validator"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Image from "next/image"
+import { useState } from "react"
+import DatePicker from "react-datepicker"
+import { useForm } from "react-hook-form"
+import * as z from 'zod'
+import Dropdown from "./Dropdown"
+import { FileUploader } from "./FileUploader"
 
-import "react-datepicker/dist/react-datepicker.css";
-import { Checkbox } from "../ui/checkbox"
-import { useRouter } from "next/navigation"
 import { createEvent, updateEvent } from "@/lib/actions/event.actions"
 import { IEvent } from "@/lib/database/models/event.model"
+import { useRouter } from "next/navigation"
+import "react-datepicker/dist/react-datepicker.css"
+import { Checkbox } from "../ui/checkbox"
 
 
 type EventFormProps = {
@@ -32,11 +32,11 @@ type EventFormProps = {
 
 const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([])
-  const initialValues = event && type === 'Update' 
-    ? { 
-      ...event, 
-      startDateTime: new Date(event.startDateTime), 
-      endDateTime: new Date(event.endDateTime) 
+  const initialValues = event && type === 'Update'
+    ? {
+      ...event,
+      startDateTime: new Date(event.startDateTime),
+      endDateTime: new Date(event.endDateTime)
     }
     : eventDefaultValues;
   const router = useRouter();
@@ -47,7 +47,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
     resolver: zodResolver(eventFormSchema),
     defaultValues: initialValues
   })
- 
+
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
     let uploadedImageUrl = values.imageUrl;
 
@@ -150,7 +150,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl className="h-72">
-                    <FileUploader 
+                    <FileUploader
                       onFieldChange={field.onChange}
                       imageUrl={field.value}
                       setFiles={setFiles}
@@ -203,9 +203,9 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                         className="filter-grey"
                       />
                       <p className="ml-3 whitespace-nowrap text-grey-600">Start Date:</p>
-                      <DatePicker 
-                        selected={field.value} 
-                        onChange={(date: Date) => field.onChange(date)} 
+                      <DatePicker
+                        selected={field.value}
+                        onChange={(date: Date) => field.onChange(date)}
                         showTimeSelect
                         timeInputLabel="Time:"
                         dateFormat="MM/dd/yyyy h:mm aa"
@@ -218,7 +218,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                 </FormItem>
               )}
             />
-        
+
           <FormField
               control={form.control}
               name="endDateTime"
@@ -234,9 +234,9 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                         className="filter-grey"
                       />
                       <p className="ml-3 whitespace-nowrap text-grey-600">End Date:</p>
-                      <DatePicker 
-                        selected={field.value} 
-                        onChange={(date: Date) => field.onChange(date)} 
+                      <DatePicker
+                        selected={field.value}
+                        onChange={(date: Date) => field.onChange(date)}
                         showTimeSelect
                         timeInputLabel="Time:"
                         dateFormat="MM/dd/yyyy h:mm aa"
@@ -280,19 +280,19 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                                   checked={field.value}
                                 id="isFree" className="mr-2 h-5 w-5 border-2 border-primary-500" />
                               </div>
-          
+
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
-                      />   
+                      />
                     </div>
 
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            />   
+            />
            <FormField
               control={form.control}
               name="url"
@@ -318,7 +318,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
         </div>
 
 
-        <Button 
+        <Button
           type="submit"
           size="lg"
           disabled={form.formState.isSubmitting}
